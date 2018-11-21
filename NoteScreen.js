@@ -46,7 +46,7 @@ export default class NoteScreen extends Component {
 
         <ActionButton
           buttonColor="rgba(231,76,60,1)"
-          onPress={() => { alert('hello');}}
+          onPress={() => this.props.navigation.navigate('NoteAdd')}
         />
 
       </View>
