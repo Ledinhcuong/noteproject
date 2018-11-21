@@ -6,21 +6,31 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, ListView} from 'react-native';
+import React, { Component } from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  ListView,
+  TouchableOpacity,
+  Image,
+} from 'react-native';
+import { FloatingAction } from 'react-native-floating-action';
+import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends Component {
-  constructor () {
-    super ();
-    const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
+  constructor() {
+    super();
+    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     this.state = {
-      dataSource: ds.cloneWithRows (['note 1', 'note 2', 'note 3']),
+      dataSource: ds.cloneWithRows(['note 1', 'note 2', 'note 3']),
     };
   }
 
-  render () {
+  render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
 
         <View style={styles.title}>
           <Text style={styles.textTitle}>Ghi Chú</Text>
@@ -34,12 +44,17 @@ export default class NoteScreen extends Component {
 
         </View>
 
+        <ActionButton
+          buttonColor="rgba(231,76,60,1)"
+          onPress={() => { alert('hello');}}
+        />
+
       </View>
     );
   }
 }
 
-const styles = StyleSheet.create ({
+const styles = StyleSheet.create({
   title: {
     flex: 1,
     flexDirection: 'column',
@@ -57,5 +72,9 @@ const styles = StyleSheet.create ({
     flexDirection: 'column',
     paddingLeft: 45,
     paddingRight: 45,
+  },
+
+  floatButton: {
+    display: 'flex',
   },
 });
