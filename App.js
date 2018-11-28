@@ -6,6 +6,8 @@ import NoteScreen from './NoteScreen';
 import NoteAddScreen from './NoteAddScreen';
 import DetailsScreen from './DetailsScreen';
 import MuaHang from './MuaHang';
+import TodoScreen from './TodoScreen';
+
 
 const RootStack = createStackNavigator(
   {
@@ -14,6 +16,7 @@ const RootStack = createStackNavigator(
     NoteAdd: NoteAddScreen,
     Details: DetailsScreen,
     MuaHang: MuaHang,
+    Todo: TodoScreen
   },
   {
     initialRouteName: 'Home',

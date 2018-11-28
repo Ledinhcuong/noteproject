@@ -29,7 +29,8 @@ export default class Home extends React.Component {
               <Image source={require ('./noteicon.png')} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Todo')}>
               <Image source={require ('./todoicon.png')} />
             </TouchableOpacity>
 
