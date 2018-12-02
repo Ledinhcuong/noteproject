@@ -9,5 +9,4 @@ import NoteAddScreen from './NoteAddScreen';
 import NoteItem from './NoteItem';
 import DetailNote from './DetailNote';
 
-
-AppRegistry.registerComponent(appName, () => DetailNote );
+AppRegistry.registerComponent(appName, () => App );

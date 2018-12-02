@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
+import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 import HomeScreen from './HomeScreen';
 import Home from './Home';
 import NoteScreen from './NoteScreen';
