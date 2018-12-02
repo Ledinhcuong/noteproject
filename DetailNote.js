@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import NoteItem from './NoteItem';
 import {
   Platform,
@@ -15,81 +15,87 @@ import {
   View,
   ToolbarAndroid,
   StatusBar,
+  ScrollView,
+  Button,
   ListView,
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { FloatingAction } from 'react-native-floating-action';
+import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
 export default class DetailNote extends Component {
-  constructor() {
-    super();
-
+  constructor () {
+    super ();
   }
 
-  render() {
+  render () {
     return (
+      <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#000'}}>
 
-
-      <View style={{ flex: 1, flexDirection: 'column' }}>
-
-        <StatusBar backgroundColor="#fff"
+        <StatusBar
+          backgroundColor="#000"
           animated={true}
-          barStyle={'dark-content'} />
+          barStyle={'light-content'}
+        />
 
-        <ToolbarAndroid 
+        <ToolbarAndroid
           style={styles.toolbar}
-          title="Detail Note"
-         // navIcon={require('./setting.png')}
+          title="Chi Tiết"
+          // navIcon={require('./setting.png')}
           titleColor={'#007aff'}
-          actions = {[{title: "Delete", show: "always",  icon: require('./deleteicon.png')}, 
-          {title: "Edit", show: "always",  icon: require('./editicon.png')}]} 
-          onActionSelected={this.onActionSelected} />
+          actions={[
+            {
+              title: 'Delete',
+              show: 'always',
+              icon: require ('./deleteicon.png'),
+            },
+            {title: 'Edit', show: 'always', icon: require ('./editicon.png')},
+            {title: 'Close', show: 'always', icon: require ('./close.png')},
+          ]}
+          onActionSelected={this.onActionSelected}
+        />
 
-          <View style={styles.content}>
-            <Text style={styles.title}>Tiêu đề</Text>
+        <View style={styles.content}>
+          <ScrollView>
+            <Text style={styles.title}>Đây là phần tiêu đề của ghi chú</Text>
 
-            <Text style={styles.contentNote}>Phần này là phần sẽ hiện thị toàn bộ nội dung của một ghi chú nội dung sẽ được cập nhật để 
+            <Text style={styles.contentNote}>
+              Phần này là phần sẽ hiện thị toàn bộ nội dung của một ghi chú nội dung sẽ được cập nhật để
               hiển thị ở các thành phần sau
             </Text>
+          
+          </ScrollView>
+          <Button title="Trở về trang trước" onPress={() => this.props.navigation.goBack (null)}/>
+         
 
-
-          </View>
+        </View>
       </View>
-
-
     );
-
-
   }
 
-  onActionSelected(position) {
+  onActionSelected (position) {
     if (position == 0) {
-      alert('Delete');
-    }  else if (position == 1) {
-      alert("Edit");
+      alert ('Delete');
+    } else if (position == 1) {
+      alert ('Edit');
+    } else if (position == 2 ) {
+      ()=>{this.props.navigation.goBack (null)};
     }
-
-
   }
-
-
 }
 
-const styles = StyleSheet.create({
-
+const styles = StyleSheet.create ({
   title: {
     fontSize: 22,
     marginBottom: 15,
     marginTop: 15,
-    color: "#ff3b30"
-   
+    color: '#fff',
   },
 
   contentNote: {
     fontSize: 18,
-
+    color: '#fff',
   },
 
   textTitle: {
@@ -107,12 +113,12 @@ const styles = StyleSheet.create({
   containerToolbar: {
     flex: 1,
     justifyContent: 'flex-start',
-   
+
     alignItems: 'stretch',
     backgroundColor: '#F5FCFF',
   },
   toolbar: {
-    backgroundColor: '#e9eaed',
+    backgroundColor: '#000',
     height: 56,
   },
 });

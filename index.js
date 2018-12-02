@@ -8,5 +8,6 @@ import NoteScreen from './NoteScreen';
 import NoteAddScreen from './NoteAddScreen';
 import NoteItem from './NoteItem';
 import DetailNote from './DetailNote';
+import EditNoteScreen from './EditNoteScreen';
 
 AppRegistry.registerComponent(appName, () => App );

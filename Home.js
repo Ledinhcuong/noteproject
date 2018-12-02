@@ -119,6 +119,7 @@ export default class Home extends React.Component {
           </TouchableOpacity>
 
           <View style={{justifyContent: 'center', flexDirection: 'row'}}>
+          
             <Image source={require ('./bottom.png')} />
           </View>
 

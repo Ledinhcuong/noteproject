@@ -5,7 +5,7 @@
 </TouchableOpacity>
 
 <TouchableOpacity
-  onPress={() => this.props.navigation.navigate('Todo')}>
+  >
   <Image source={require ('./assets/todoicon.png')} />
 </TouchableOpacity>
 
@@ -22,3 +22,8 @@
 </TouchableOpacity>
 
 </View>
+
+<Button
+title="Nút"
+onPress={() => this.props.navigation.goBack (null)}
+/>
