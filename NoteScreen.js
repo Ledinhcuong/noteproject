@@ -13,6 +13,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Button,
   ListView,
   TouchableOpacity,
   Image,
@@ -32,6 +33,9 @@ export default class NoteScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
+
+      <Button title="Nút"
+      onPress={()=>this.props.navigation.goBack(null)}></Button>
 
         <View style={styles.title}>
           <Text style={styles.textTitle}>Ghi Chú</Text>

@@ -66,7 +66,8 @@ export default class Home extends React.Component {
 
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Todo')}>
             <View style={styles.contentIcon}>
 
               <View style={{padding: 10}}>
