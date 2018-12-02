@@ -26,11 +26,12 @@ export default class Home extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Note')}>
-              <Image source={require ('./noteicon.png')} />
+              <Image source={require ('./assets/noteicon.png')} />
             </TouchableOpacity>
 
-            <TouchableOpacity>
-              <Image source={require ('./todoicon.png')} />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Todo')}>
+              <Image source={require ('./assets/todoicon.png')} />
             </TouchableOpacity>
 
           </View>
@@ -38,11 +39,11 @@ export default class Home extends React.Component {
            <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 25}}>
            
             <TouchableOpacity>
-              <Image source={require ('./calendaricon.png')} />
+              <Image source={require ('./assets/calendaricon.png')} />
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Image source={require ('./trashicon.png')} />
+              <Image source={require ('./assets/trashicon.png')} />
             </TouchableOpacity>
 
           </View>
