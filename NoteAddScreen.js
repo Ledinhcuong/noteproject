@@ -52,12 +52,6 @@ export default class NoteScreen extends Component {
             editable={true}
           />
 
-          <ModalDropdown
-
-            options={['Màu 1', 'Màu 2', 'Màu 3']}
-            style={{width: 120,marginTop: 10, marginBottom: 10}}
-            defaultValue="Chọn màu sắc cho ghi chú"
-          />
 
           <View
             style={{

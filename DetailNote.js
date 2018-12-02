@@ -20,35 +20,16 @@ import {
 import { FloatingAction } from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
-export default class NoteScreen extends Component {
+export default class DetailNote extends Component {
   constructor() {
     super();
-    const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
-    this.state = {
-      dataSource: ds.cloneWithRows(['note 1', 'note 2', 'note 3', 'note 4', 'note 5', 'note 6']),
-    };
+   
   }
 
   render() {
     return (
       <View style={{ flex: 1 }}>
 
-        <View style={styles.title}>
-          <Text style={styles.textTitle}>Ghi Chú</Text>
-        </View>
-
-        <View style={styles.content}>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={rowData => <NoteItem title="Tiêu đề" date="25/12/2018" content="Nội dung của nó"></NoteItem>}
-          />
-
-        </View>
-
-        <ActionButton
-          buttonColor="rgba(231,76,60,1)"
-          onPress={() => this.props.navigation.navigate('NoteAdd')}
-        />
 
       </View>
     );
