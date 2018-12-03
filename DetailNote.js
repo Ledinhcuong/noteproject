@@ -25,8 +25,8 @@ import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
 export default class DetailNote extends Component {
-  constructor () {
-    super ();
+  constructor (props) {
+    super (props);
   }
 
   render () {
@@ -42,9 +42,10 @@ export default class DetailNote extends Component {
         <ToolbarAndroid
           style={styles.toolbar}
           title="Chi Tiết"
-          // navIcon={require('./setting.png')}
+          navIcon={require ('./note.png')}
           titleColor={'#007aff'}
-          actions={[
+
+          /* actions={[
             {
               title: 'Delete',
               show: 'always',
@@ -53,8 +54,29 @@ export default class DetailNote extends Component {
             {title: 'Edit', show: 'always', icon: require ('./editicon.png')},
             {title: 'Close', show: 'always', icon: require ('./close.png')},
           ]}
-          onActionSelected={this.onActionSelected}
+          //onActionSelected={this.onActionSelected} 
+         */
         />
+
+        <View style={{flexDirection: "row", justifyContent: 'flex-end', marginRight: 20}}>
+          
+          <View style={styles.backGroundAction}>
+            <TouchableOpacity style={styles.bntAction}
+            onPress={()=> this.props.navigation.navigate ('EditNoteScreen')}>
+              <Image source={require ('./editicon.png')} />
+            </TouchableOpacity>
+
+             <TouchableOpacity style={styles.bntAction}>
+              <Image source={require ('./deleteicon.png')} />
+            </TouchableOpacity>
+
+             <TouchableOpacity style={styles.bntAction}
+             onPress={() => this.props.navigation.goBack (null)}>
+              <Image source={require ('./close.png')} />
+            </TouchableOpacity>
+          </View>
+
+        </View>
 
         <View style={styles.content}>
           <ScrollView>
@@ -64,25 +86,32 @@ export default class DetailNote extends Component {
               Phần này là phần sẽ hiện thị toàn bộ nội dung của một ghi chú nội dung sẽ được cập nhật để
               hiển thị ở các thành phần sau
             </Text>
-          
+
           </ScrollView>
-          <Button title="Trở về trang trước" onPress={() => this.props.navigation.goBack (null)}/>
-         
+          <Button
+            title="Trở về trang trước"
+            onPress={() => this.props.navigation.goBack (null)}
+          />
 
         </View>
       </View>
     );
   }
 
-  onActionSelected (position) {
+  /*
+
+  onActionSelected (position, props = this.props) {
     if (position == 0) {
       alert ('Delete');
     } else if (position == 1) {
       alert ('Edit');
+      this.props.navigation.navigate ('EditNoteScreen');
     } else if (position == 2 ) {
-      ()=>{this.props.navigation.goBack (null)};
+      alert('Back');  
+      
     }
   }
+  */
 }
 
 const styles = StyleSheet.create ({
@@ -90,7 +119,19 @@ const styles = StyleSheet.create ({
     fontSize: 22,
     marginBottom: 15,
     marginTop: 15,
-    color: '#fff',
+    color: '#ff9100',
+  },
+
+  backGroundAction: {
+    flexDirection: 'row',
+     backgroundColor: "#5C5C5C",
+      padding: 4,
+       borderRadius: 18
+  },
+
+  bntAction: {
+    marginLeft: 2,
+     marginRight: 2,
   },
 
   contentNote: {

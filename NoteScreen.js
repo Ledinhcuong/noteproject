@@ -24,6 +24,7 @@ import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends Component {
+  
   constructor () {
     super ();
     const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -53,6 +54,24 @@ export default class NoteScreen extends Component {
         </View>
 
         <View style={styles.content}>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+             
+              <View style={styles.backGroundAction}>
+                <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./homeicon.png')} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./searchicon.png')} />
+                </TouchableOpacity>
+
+                 <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./upbuttonicon.png')} />
+                </TouchableOpacity>
+
+              </View>
+
+          </View>
           <Text
             style={{
               color: '#fff',
@@ -94,6 +113,18 @@ const styles = StyleSheet.create ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  backGroundAction: {
+    flexDirection: 'row',
+     backgroundColor: '#5C5C5C',
+      borderRadius: 18,
+       padding: 5
+  },
+
+  btnAction: {
+    marginLeft: 3,
+    marginRight: 3,
   },
 
   textTitle: {
