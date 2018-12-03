@@ -6,7 +6,7 @@ import NoteScreen from './NoteScreen';
 import NoteAddScreen from './NoteAddScreen';
 import DetailsScreen from './DetailsScreen';
 import MuaHang from './MuaHang';
-import TodoScreen from './TodoScreen';
+import TodoScreen from './views/TodoScreen';
 
 
 const RootStack = createStackNavigator(
