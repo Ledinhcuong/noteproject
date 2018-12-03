@@ -125,13 +125,13 @@ const styles = StyleSheet.create ({
   backGroundAction: {
     flexDirection: 'row',
      backgroundColor: "#5C5C5C",
-      padding: 4,
+      padding: 5,
        borderRadius: 18
   },
 
   bntAction: {
-    marginLeft: 2,
-     marginRight: 2,
+    marginLeft: 3,
+     marginRight: 3,
   },
 
   contentNote: {

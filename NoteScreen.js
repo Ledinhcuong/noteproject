@@ -45,7 +45,7 @@ export default class NoteScreen extends Component {
       <View style={{flex: 1, backgroundColor: '#000'}}>
   
       <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
-        <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}>  Back Home</Text>
+        <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}> Màn Hình Chủ</Text>
       </TouchableOpacity>
 
         <View style={styles.title}>
@@ -57,7 +57,8 @@ export default class NoteScreen extends Component {
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
              
               <View style={styles.backGroundAction}>
-                <TouchableOpacity style={styles.btnAction}>
+                <TouchableOpacity style={styles.btnAction}
+                onPress={()=> this.props.navigation.navigate ('Home')}>
                 <Image source={require ('./homeicon.png')} />
                 </TouchableOpacity>
 

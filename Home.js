@@ -40,7 +40,8 @@ export default class Home extends React.Component {
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
 
             <View style={styles.backGroundAction}>
-              <TouchableOpacity style={styles.btnAction}>
+              <TouchableOpacity style={styles.btnAction}
+              onPress={()=>this.props.navigation.navigate ('NoteAdd')}>
                 <Image source={require ('./addnoteicon.png')} />
               </TouchableOpacity>
 
@@ -139,9 +140,15 @@ export default class Home extends React.Component {
 
           </TouchableOpacity>
 
-          <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-            <TouchableOpacity>
-              <Text style={{color: '#fff'}}>Đóng ứng dụng</Text>
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+
+              <Text style={{color: '#fff'}}>Phiên bản 1.0</Text>
+             <TouchableOpacity>
+             
+            </TouchableOpacity>
+
+             <TouchableOpacity>
+              <Text style={{color: '#7c4dff'}}>Settings</Text>
             </TouchableOpacity>
 
           </View>
