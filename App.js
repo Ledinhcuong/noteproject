@@ -9,7 +9,7 @@ import EditNoteScreen from './EditNoteScreen';
 import DetailNote from './DetailNote';
 import NoteItem from './NoteItem';
 import MuaHang from './MuaHang';
-import TodoScreen from './TodoScreen';
+import TodoScreen from './views/TodoScreen';
 
 
 const RootStack = createStackNavigator(
