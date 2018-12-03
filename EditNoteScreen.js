@@ -21,7 +21,7 @@ import {
 import {FloatingAction} from 'react-native-floating-action';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class NoteScreen extends Component {
+export default class EditNoteScreen extends Component {
   constructor (props) {
     super (props);
     this.state = {text: 'Useless Placeholder'};
@@ -31,17 +31,17 @@ export default class NoteScreen extends Component {
     return (
       <View style={{flex: 1, backgroundColor: "#000"}}>
 
-       <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
+       <TouchableOpacity>
          <Image style={{marginLeft: 20}} source={require ('./backicon.png')} /> 
        </TouchableOpacity>
 
         <View style={styles.title}>
         <Image style={{width: 56, height: 56, marginBottom: 5}} source={require ('./notei.png')} />
-          <Text style={styles.textTitle}>Thêm Ghi Chú</Text>
+          <Text style={styles.textTitle}>Sửa Ghi Chú</Text>
         </View>
 
         <View style={styles.content}>
-          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Vui lòng điền đủ các thông tin sau</Text>
+          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi thông tin mà bạn muốn sửa</Text>
           <TextInput
             style={styles.inputTitle}
             onChangeText={text => this.setState ({text})}
@@ -71,12 +71,11 @@ export default class NoteScreen extends Component {
 
             <TouchableOpacity style={{marginTop: 15}}>
               <Text style={styles.btnAdd}>
-                Thêm
+                Lưu
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{marginTop: 15}}
-            onPress={() => this.props.navigation.goBack (null)}>
+            <TouchableOpacity style={{marginTop: 15}}>
               <Text style={styles.btnCancel}>
                 Hủy
               </Text>
