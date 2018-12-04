@@ -54,7 +54,7 @@ export default class EditNoteScreen extends Component {
         Content: this.state.contentnote
       })
     }).then((response) => response.json()).then((responseJsonFromServer)=>{
-      alert(responseJsonFromServer);  // In thông báo từ server
+     // alert(responseJsonFromServer);  // In thông báo từ server
 
       // Trở về màn hình hiển thị các danh sách ghi chú
       this.props.navigation.navigate ('Note');
@@ -96,7 +96,7 @@ export default class EditNoteScreen extends Component {
 
           <TextInput
             style={styles.inputContent}
-            onChangeText={text => text => this.setState ({contentnote: text})}
+            onChangeText={ text => this.setState ({contentnote: text})}
             placeholder="  Nhập nội dung ghi chú"
             numberOfLines={5}
             multiline={true}
