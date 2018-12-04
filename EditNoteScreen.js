@@ -24,8 +24,13 @@ import ModalDropdown from 'react-native-modal-dropdown';
 export default class EditNoteScreen extends Component {
   constructor (props) {
     super (props);
-    this.state = {text: 'Useless Placeholder'};
+     
+    // State
+     this.state = {text: 'Useless Placeholder',
+     titlenote: this.props.navigation.state.params.titleSelect,
+     contentnote: this.props.navigation.state.params.titleSelect,
   }
+}
 
   render () {
     return (
@@ -44,18 +49,22 @@ export default class EditNoteScreen extends Component {
           <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi những nội dung bạn muốn sửa</Text>
           <TextInput
             style={styles.inputTitle}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={text => this.setState ({titlenote: text})}
             placeholder="  Nhập tiêu đề"
+            value={this.state.titlenote}
+            maxLength={25}
             placeholderTextColor= "#7c4dff"
           />
 
           <TextInput
             style={styles.inputContent}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={text => text => this.setState ({contentnote: text})}
             placeholder="  Nhập nội dung ghi chú"
             numberOfLines={5}
             multiline={true}
             editable={true}
+            maxLength={45}
+            value={this.state.contentnote}
             placeholderTextColor= "#03a9f4"
           />
 

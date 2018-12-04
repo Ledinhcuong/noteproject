@@ -25,10 +25,7 @@ export default class NoteScreen extends Component {
   constructor (props) {
     super (props);
 
-    // Props
-    this.props.titleSelect = '';
-    this.props.contentSelect = '';
-
+    
     // State
     this.state = {text: 'Useless Placeholder',
     titlenote: '',
@@ -90,6 +87,7 @@ export default class NoteScreen extends Component {
             onChangeText={text => this.setState ({titlenote: text})}
             placeholder="  Nhập tiêu đề"
             placeholderTextColor= "#7c4dff"
+            maxLength={25}
           />
 
           <TextInput
@@ -99,6 +97,7 @@ export default class NoteScreen extends Component {
             numberOfLines={5}
             multiline={true}
             editable={true}
+            maxLength={45}
             placeholderTextColor= "#03a9f4"
           />
 

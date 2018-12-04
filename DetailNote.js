@@ -62,7 +62,11 @@ export default class DetailNote extends Component {
           
           <View style={styles.backGroundAction}>
             <TouchableOpacity style={styles.bntAction}
-            onPress={()=> this.props.navigation.navigate ('EditNoteScreen')}>
+            onPress={()=> {
+              this.props.navigation.navigate ('EditNoteScreen', {titleSelect: this.props.navigation.state.params.titleSelect,
+              contentSelect: this.props.navigation.state.params.contentSelect} );
+              
+              }}>
               <Image source={require ('./editicon.png')} />
             </TouchableOpacity>
 
