@@ -63,7 +63,7 @@ export default class NoteScreen extends Component {
     return (
       <View style={{flex: 1, backgroundColor: '#000'}}>
   
-      <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate ('Home')}>
         <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}> Màn Hình Chủ</Text>
       </TouchableOpacity>
 
