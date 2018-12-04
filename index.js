@@ -9,5 +9,6 @@ import NoteAddScreen from './NoteAddScreen';
 import NoteItem from './NoteItem';
 import DetailNote from './DetailNote';
 import EditNoteScreen from './EditNoteScreen';
+import AddTodoScreen from './views/AddTodoScreen'
 
 AppRegistry.registerComponent(appName, () => App );

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View, CheckBox } from 'react-native';
+import { AppRegistry, FlatList, StyleSheet, Text, View, CheckBox, TouchableOpacity } from 'react-native';
+import ActionButton from 'react-native-action-button';
 
 const dataSource = [
   {key: 'Project Laravel'},
@@ -24,9 +25,14 @@ export default class FlatListBasics extends Component {
             renderItem={
               ({item}) =>
               <View style={styles.todoItemContainer}>
+              <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('EditTodo', {
+                todoContent: item.key
+              })}>
                 <Text style={styles.item}>{item.key}</Text>
+              </TouchableOpacity>
                 <CheckBox
-                  title='Click Here'
+                  title='Mark this task as Done'
                   checked={this.state.checked}
                 />
               </View>
@@ -45,6 +51,10 @@ export default class FlatListBasics extends Component {
             }
           />
         </View>
+        <ActionButton
+          buttonColor="darkorange"
+          onPress={() => this.props.navigation.navigate ('AddTodo')}
+        />
       </View>
     );
   }
