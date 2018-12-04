@@ -99,7 +99,7 @@ export default class NoteScreen extends Component {
             renderRow={rowData => (
               <TouchableOpacity onPress={()=> {
               
-              this.props.navigation.navigate ('DetailNote', {titleSelect: rowData.TitleNote , contentSelect: rowData.Content});}}>
+              this.props.navigation.navigate ('DetailNote', {idSelect: rowData.Id, titleSelect: rowData.TitleNote , contentSelect: rowData.Content});}}>
                   <NoteItem
                 title={rowData.TitleNote}
                 date={rowData.Date}

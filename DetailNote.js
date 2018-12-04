@@ -27,6 +27,8 @@ import ActionButton from 'react-native-action-button';
 export default class DetailNote extends Component {
   constructor (props) {
     super (props);
+    alert( this.props.navigation.state.params.idSelect);
+
   }
 
   render () {
@@ -64,7 +66,8 @@ export default class DetailNote extends Component {
             <TouchableOpacity style={styles.bntAction}
             onPress={()=> {
               this.props.navigation.navigate ('EditNoteScreen', {titleSelect: this.props.navigation.state.params.titleSelect,
-              contentSelect: this.props.navigation.state.params.contentSelect} );
+              contentSelect: this.props.navigation.state.params.contentSelect,
+            idSelect:  this.props.navigation.state.params.idSelect} );
               
               }}>
               <Image source={require ('./editicon.png')} />
