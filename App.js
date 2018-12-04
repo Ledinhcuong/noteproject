@@ -1,10 +1,13 @@
 import React from 'react';
-import { createStackNavigator, createAppContainer } from 'react-navigation'; // Version can be specified in package.json
+import { createStackNavigator, createAppContainer } from 'react-navigation'; 
 import HomeScreen from './HomeScreen';
 import Home from './Home';
 import NoteScreen from './NoteScreen';
 import NoteAddScreen from './NoteAddScreen';
 import DetailsScreen from './DetailsScreen';
+import EditNoteScreen from './EditNoteScreen';
+import DetailNote from './DetailNote';
+import NoteItem from './NoteItem';
 import MuaHang from './MuaHang';
 import TodoScreen from './views/TodoScreen';
 
@@ -15,11 +18,14 @@ const RootStack = createStackNavigator(
     Note: NoteScreen,
     NoteAdd: NoteAddScreen,
     Details: DetailsScreen,
-    MuaHang: MuaHang,
+    DetailNote: DetailNote,
+    EditNoteScreen: EditNoteScreen,
+    NoteItem: NoteItem,
     Todo: TodoScreen
   },
   {
     initialRouteName: 'Home',
+    headerMode: 'none',
   }
 );
 

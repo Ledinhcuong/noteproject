@@ -21,7 +21,7 @@ import {
 import {FloatingAction} from 'react-native-floating-action';
 import ModalDropdown from 'react-native-modal-dropdown';
 
-export default class NoteScreen extends Component {
+export default class EditNoteScreen extends Component {
   constructor (props) {
     super (props);
     this.state = {text: 'Useless Placeholder'};
@@ -37,11 +37,11 @@ export default class NoteScreen extends Component {
 
         <View style={styles.title}>
         <Image style={{width: 56, height: 56, marginBottom: 5}} source={require ('./notei.png')} />
-          <Text style={styles.textTitle}>Thêm Ghi Chú</Text>
+          <Text style={styles.textTitle}>Sửa Ghi Chú</Text>
         </View>
 
         <View style={styles.content}>
-          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Vui lòng điền đủ các thông tin sau</Text>
+          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi những nội dung bạn muốn sửa</Text>
           <TextInput
             style={styles.inputTitle}
             onChangeText={text => this.setState ({text})}
@@ -69,7 +69,7 @@ export default class NoteScreen extends Component {
 
             <TouchableOpacity style={{marginTop: 15}}>
               <Text style={styles.btnAdd}>
-                Thêm
+                Lưu
               </Text>
             </TouchableOpacity>
 
@@ -144,7 +144,7 @@ const styles = StyleSheet.create ({
   },
 
   btnCancel: {
-    backgroundColor: '#ff9100',
+    backgroundColor: '#ff3b30',
     width: 120,
     paddingTop: 5,
     paddingBottom: 5,
