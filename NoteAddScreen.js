@@ -24,6 +24,12 @@ import ModalDropdown from 'react-native-modal-dropdown';
 export default class NoteScreen extends Component {
   constructor (props) {
     super (props);
+
+    // Props
+    this.props.titleSelect = '';
+    this.props.contentSelect = '';
+
+    // State
     this.state = {text: 'Useless Placeholder',
     titlenote: '',
     contentnote: '',

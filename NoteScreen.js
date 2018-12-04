@@ -27,22 +27,15 @@ export default class NoteScreen extends Component {
   
   constructor (props) {
     super (props);
+
+    // Props
+    
+
+    // State
     this.state = {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     }
-/*
-    const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows ([
-        'note 1',
-        'note 2',
-        'note 3',
-        'note 4',
-        'note 5',
-        'note 6',
-      ]),
-    };
-    */
+
   }
  
   fetchData() {
@@ -104,7 +97,9 @@ export default class NoteScreen extends Component {
           <ListView
             dataSource={this.state.dataSource}
             renderRow={rowData => (
-              <TouchableOpacity onPress={()=> this.props.navigation.navigate ('DetailNote')}>
+              <TouchableOpacity onPress={()=> {
+              
+              this.props.navigation.navigate ('DetailNote', {titleSelect: rowData.TitleNote , contentSelect: rowData.Content});}}>
                   <NoteItem
                 title={rowData.TitleNote}
                 date={rowData.Date}

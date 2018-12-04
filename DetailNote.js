@@ -80,11 +80,10 @@ export default class DetailNote extends Component {
 
         <View style={styles.content}>
           <ScrollView>
-            <Text style={styles.title}>Đây là phần tiêu đề của ghi chú</Text>
+            <Text style={styles.title}> {this.props.navigation.state.params.titleSelect}</Text>
 
             <Text style={styles.contentNote}>
-              Phần này là phần sẽ hiện thị toàn bộ nội dung của một ghi chú nội dung sẽ được cập nhật để
-              hiển thị ở các thành phần sau
+              {this.props.navigation.state.params.contentSelect}
             </Text>
 
           </ScrollView>
