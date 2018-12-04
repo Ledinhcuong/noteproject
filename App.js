@@ -10,7 +10,8 @@ import DetailNote from './DetailNote';
 import NoteItem from './NoteItem';
 import MuaHang from './MuaHang';
 import TodoScreen from './views/TodoScreen';
-
+import AddTodoScreen from './views/AddTodoScreen';
+import EditTodoScreen from './views/EditTodoScreen';
 
 const RootStack = createStackNavigator(
   {
@@ -21,7 +22,9 @@ const RootStack = createStackNavigator(
     DetailNote: DetailNote,
     EditNoteScreen: EditNoteScreen,
     NoteItem: NoteItem,
-    Todo: TodoScreen
+    Todo: TodoScreen,
+    AddTodo: AddTodoScreen,
+    EditTodo: EditTodoScreen,
   },
   {
     initialRouteName: 'Home',
