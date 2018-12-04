@@ -85,7 +85,8 @@ export default class NoteScreen extends React.Component {
                 <Image source={require ('./searchicon.png')} />
                 </TouchableOpacity>
 
-                 <TouchableOpacity style={styles.btnAction}>
+                 <TouchableOpacity style={styles.btnAction}
+                 onPress={this.fetchData()}>
                 <Image source={require ('./upbuttonicon.png')} />
                 </TouchableOpacity>
 

@@ -26,7 +26,7 @@ export default class EditNoteScreen extends Component {
   // Hàm khởi tạo
   constructor (props) {
     super (props);
-    alert(this.props.navigation.state.params.idSelect);
+  //  alert(this.props.navigation.state.params.idSelect);
      
     // State
      this.state = {text: 'Useless Placeholder',
