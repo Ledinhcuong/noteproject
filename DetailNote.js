@@ -27,7 +27,41 @@ import ActionButton from 'react-native-action-button';
 export default class DetailNote extends Component {
   constructor (props) {
     super (props);
+    //alert( this.props.navigation.state.params.idSelect);
+
   }
+
+  
+  // Phương thuc xoa dư lieu
+  Delete_Note = () => {
+    this.setState(()=>
+    {
+    fetch('http://192.168.161.2:81/webservice/deletenote.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        IdNote: this.props.navigation.state.params.idSelect
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{
+     
+     // alert(responseJsonFromServer);  // In thông báo từ server
+
+      // Trở về màn hình hiển thị các danh sách ghi chú
+      this.props.navigation.navigate ('Note');
+
+
+    }).catch((error)=>{
+
+      // In ra canh bao loi tu server
+      console.error(error);
+    });
+  });
+}
+
 
   render () {
     return (
@@ -62,11 +96,17 @@ export default class DetailNote extends Component {
           
           <View style={styles.backGroundAction}>
             <TouchableOpacity style={styles.bntAction}
-            onPress={()=> this.props.navigation.navigate ('EditNoteScreen')}>
+            onPress={()=> {
+              this.props.navigation.navigate ('EditNoteScreen', {titleSelect: this.props.navigation.state.params.titleSelect,
+              contentSelect: this.props.navigation.state.params.contentSelect,
+            idSelect:  this.props.navigation.state.params.idSelect} );
+              
+              }}>
               <Image source={require ('./editicon.png')} />
             </TouchableOpacity>
 
-             <TouchableOpacity style={styles.bntAction}>
+             <TouchableOpacity style={styles.bntAction}
+             onPress={this.Delete_Note}>
               <Image source={require ('./deleteicon.png')} />
             </TouchableOpacity>
 
@@ -80,11 +120,10 @@ export default class DetailNote extends Component {
 
         <View style={styles.content}>
           <ScrollView>
-            <Text style={styles.title}>Đây là phần tiêu đề của ghi chú</Text>
+            <Text style={styles.title}> {this.props.navigation.state.params.titleSelect}</Text>
 
             <Text style={styles.contentNote}>
-              Phần này là phần sẽ hiện thị toàn bộ nội dung của một ghi chú nội dung sẽ được cập nhật để
-              hiển thị ở các thành phần sau
+              {this.props.navigation.state.params.contentSelect}
             </Text>
 
           </ScrollView>

@@ -23,26 +23,19 @@ import {
 import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
-export default class NoteScreen extends Component {
+export default class NoteScreen extends React.Component {
   
   constructor (props) {
     super (props);
+
+    // Props
+    
+
+    // State
     this.state = {
       dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
     }
-/*
-    const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      dataSource: ds.cloneWithRows ([
-        'note 1',
-        'note 2',
-        'note 3',
-        'note 4',
-        'note 5',
-        'note 6',
-      ]),
-    };
-    */
+
   }
  
   fetchData() {
@@ -55,15 +48,24 @@ export default class NoteScreen extends Component {
     }).done()
   }
 
+
+  // Lấy dữ liệu từ sever
   componentDidMount() {
     this.fetchData();
   }
+
+  
+  componentWillUpdate() {
+  
+    return true;
+  }
+  
 
   render () {
     return (
       <View style={{flex: 1, backgroundColor: '#000'}}>
   
-      <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
+      <TouchableOpacity onPress={() => this.props.navigation.navigate ('Home')}>
         <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}> Màn Hình Chủ</Text>
       </TouchableOpacity>
 
@@ -85,7 +87,8 @@ export default class NoteScreen extends Component {
                 <Image source={require ('./searchicon.png')} />
                 </TouchableOpacity>
 
-                 <TouchableOpacity style={styles.btnAction}>
+                 <TouchableOpacity style={styles.btnAction}
+                 onPress={this.fetchData()}>
                 <Image source={require ('./upbuttonicon.png')} />
                 </TouchableOpacity>
 
@@ -102,9 +105,12 @@ export default class NoteScreen extends Component {
             Các ghi chú của bạn
           </Text>
           <ListView
+          
             dataSource={this.state.dataSource}
             renderRow={rowData => (
-              <TouchableOpacity onPress={()=> this.props.navigation.navigate ('DetailNote')}>
+              <TouchableOpacity onPress={()=> {
+              
+              this.props.navigation.navigate ('DetailNote', {idSelect: rowData.Id, titleSelect: rowData.TitleNote , contentSelect: rowData.Content});}}>
                   <NoteItem
                 title={rowData.TitleNote}
                 date={rowData.Date}

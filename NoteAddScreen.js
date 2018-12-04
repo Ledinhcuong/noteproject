@@ -24,7 +24,47 @@ import ModalDropdown from 'react-native-modal-dropdown';
 export default class NoteScreen extends Component {
   constructor (props) {
     super (props);
-    this.state = {text: 'Useless Placeholder'};
+
+    
+    // State
+    this.state = {text: 'Useless Placeholder',
+    titlenote: '',
+    contentnote: '',
+
+  };
+  }
+
+
+  // Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
+  Insert_Data_Into_MySQL = () => {
+    this.setState(()=>
+    {
+    fetch('http://192.168.161.2:81/webservice/addnote.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        TitleNote: this.state.titlenote,
+        Content: this.state.contentnote
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{
+     // alert(responseJsonFromServer);  // In thông báo từ server
+
+      // Trở về màn hình hiển thị các danh sách ghi chú
+      this.props.navigation.navigate ('Note');
+
+
+    }).catch((error)=>{
+
+      // In ra canh bao loi tu server
+      console.error(error);
+    });
+  });
+
+ 
   }
 
   render () {
@@ -44,18 +84,20 @@ export default class NoteScreen extends Component {
           <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Vui lòng điền đủ các thông tin sau</Text>
           <TextInput
             style={styles.inputTitle}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={text => this.setState ({titlenote: text})}
             placeholder="  Nhập tiêu đề"
             placeholderTextColor= "#7c4dff"
+            maxLength={40}
           />
 
           <TextInput
             style={styles.inputContent}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={text => this.setState ({contentnote: text})}
             placeholder="  Nhập nội dung ghi chú"
             numberOfLines={5}
             multiline={true}
             editable={true}
+            maxLength={75}
             placeholderTextColor= "#03a9f4"
           />
 
@@ -67,14 +109,17 @@ export default class NoteScreen extends Component {
             }}
           >
 
-            <TouchableOpacity style={{marginTop: 15}}>
+            <TouchableOpacity style={{marginTop: 15}}
+            onPress={this.Insert_Data_Into_MySQL}
+            >
               <Text style={styles.btnAdd}>
                 Thêm
               </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={{marginTop: 15}}
-            onPress={() => this.props.navigation.goBack (null)}>
+            onPress={() =>  // Trở về màn hình hiển thị các danh sách ghi chú
+              this.props.navigation.navigate ('Note')}>
               <Text style={styles.btnCancel}>
                 Hủy
               </Text>

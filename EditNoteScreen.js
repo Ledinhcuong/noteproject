@@ -1,6 +1,6 @@
 /**
  * Tacgia: Lê Đình Cường
- * Screen: NoteAddScreen
+ * Screen: NoteEditScreen
  *
  * @format
  * @flow
@@ -22,10 +22,53 @@ import {FloatingAction} from 'react-native-floating-action';
 import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class EditNoteScreen extends Component {
+
+  // Hàm khởi tạo
   constructor (props) {
     super (props);
-    this.state = {text: 'Useless Placeholder'};
+  //  alert(this.props.navigation.state.params.idSelect);
+     
+    // State
+     this.state = {text: 'Useless Placeholder',
+     idnote: this.props.navigation.state.params.idSelect,
+     titlenote: this.props.navigation.state.params.titleSelect,
+     contentnote: this.props.navigation.state.params.contentSelect,
   }
+}
+
+
+  // Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
+  Edit_Data_Into_MySQL = () => {
+    this.setState(()=>
+    {
+    fetch('http://192.168.161.2:81/webservice/editnote.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        IdNote: this.state.idnote,
+        TitleNote: this.state.titlenote,
+        Content: this.state.contentnote
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{
+     // alert(responseJsonFromServer);  // In thông báo từ server
+
+      // Trở về màn hình hiển thị các danh sách ghi chú
+      this.props.navigation.navigate ('Note');
+
+
+    }).catch((error)=>{
+
+      // In ra canh bao loi tu server
+      console.error(error);
+    });
+  });
+
+  }
+
 
   render () {
     return (
@@ -44,18 +87,22 @@ export default class EditNoteScreen extends Component {
           <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi những nội dung bạn muốn sửa</Text>
           <TextInput
             style={styles.inputTitle}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={text => this.setState ({titlenote: text})}
             placeholder="  Nhập tiêu đề"
+            value={this.state.titlenote}
+            maxLength={40}
             placeholderTextColor= "#7c4dff"
           />
 
           <TextInput
             style={styles.inputContent}
-            onChangeText={text => this.setState ({text})}
+            onChangeText={ text => this.setState ({contentnote: text})}
             placeholder="  Nhập nội dung ghi chú"
             numberOfLines={5}
             multiline={true}
             editable={true}
+            maxLength={75}
+            value={this.state.contentnote}
             placeholderTextColor= "#03a9f4"
           />
 
@@ -67,7 +114,8 @@ export default class EditNoteScreen extends Component {
             }}
           >
 
-            <TouchableOpacity style={{marginTop: 15}}>
+            <TouchableOpacity style={{marginTop: 15}}
+            onPress={this.Edit_Data_Into_MySQL}>
               <Text style={styles.btnAdd}>
                 Lưu
               </Text>
