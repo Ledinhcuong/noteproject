@@ -32,7 +32,7 @@ export default class EditNoteScreen extends Component {
      this.state = {text: 'Useless Placeholder',
      idnote: this.props.navigation.state.params.idSelect,
      titlenote: this.props.navigation.state.params.titleSelect,
-     contentnote: this.props.navigation.state.params.titleSelect,
+     contentnote: this.props.navigation.state.params.contentSelect,
   }
 }
 
@@ -90,7 +90,7 @@ export default class EditNoteScreen extends Component {
             onChangeText={text => this.setState ({titlenote: text})}
             placeholder="  Nhập tiêu đề"
             value={this.state.titlenote}
-            maxLength={25}
+            maxLength={40}
             placeholderTextColor= "#7c4dff"
           />
 
@@ -101,7 +101,7 @@ export default class EditNoteScreen extends Component {
             numberOfLines={5}
             multiline={true}
             editable={true}
-            maxLength={45}
+            maxLength={75}
             value={this.state.contentnote}
             placeholderTextColor= "#03a9f4"
           />

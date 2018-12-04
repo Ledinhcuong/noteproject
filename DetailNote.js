@@ -47,7 +47,8 @@ export default class DetailNote extends Component {
         IdNote: this.props.navigation.state.params.idSelect
       })
     }).then((response) => response.json()).then((responseJsonFromServer)=>{
-      alert(responseJsonFromServer);  // In thông báo từ server
+     
+     // alert(responseJsonFromServer);  // In thông báo từ server
 
       // Trở về màn hình hiển thị các danh sách ghi chú
       this.props.navigation.navigate ('Note');

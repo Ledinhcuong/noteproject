@@ -54,10 +54,12 @@ export default class NoteScreen extends React.Component {
     this.fetchData();
   }
 
+  
   componentWillUpdate() {
   
     return true;
   }
+  
 
   render () {
     return (
@@ -103,7 +105,7 @@ export default class NoteScreen extends React.Component {
             Các ghi chú của bạn
           </Text>
           <ListView
-            onEndReached={() => this.fetchData()}
+          
             dataSource={this.state.dataSource}
             renderRow={rowData => (
               <TouchableOpacity onPress={()=> {
