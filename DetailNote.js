@@ -31,6 +31,37 @@ export default class DetailNote extends Component {
 
   }
 
+  
+  // Phương thuc xoa dư lieu
+  Delete_Note = () => {
+    this.setState(()=>
+    {
+    fetch('http://192.168.161.2:81/webservice/deletenote.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        IdNote: this.props.navigation.state.params.idSelect
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{
+      alert(responseJsonFromServer);  // In thông báo từ server
+
+      // Trở về màn hình hiển thị các danh sách ghi chú
+      this.props.navigation.navigate ('Note');
+
+
+    }).catch((error)=>{
+
+      // In ra canh bao loi tu server
+      console.error(error);
+    });
+  });
+}
+
+
   render () {
     return (
       <View style={{flex: 1, flexDirection: 'column', backgroundColor: '#000'}}>
@@ -73,7 +104,8 @@ export default class DetailNote extends Component {
               <Image source={require ('./editicon.png')} />
             </TouchableOpacity>
 
-             <TouchableOpacity style={styles.bntAction}>
+             <TouchableOpacity style={styles.bntAction}
+             onPress={this.Delete_Note}>
               <Image source={require ('./deleteicon.png')} />
             </TouchableOpacity>
 

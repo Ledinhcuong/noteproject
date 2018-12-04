@@ -23,7 +23,7 @@ import {
 import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
-export default class NoteScreen extends Component {
+export default class NoteScreen extends React.Component {
   
   constructor (props) {
     super (props);
@@ -48,8 +48,15 @@ export default class NoteScreen extends Component {
     }).done()
   }
 
+
+  // Lấy dữ liệu từ sever
   componentDidMount() {
     this.fetchData();
+  }
+
+  componentWillUpdate() {
+  
+    return true;
   }
 
   render () {
@@ -95,6 +102,7 @@ export default class NoteScreen extends Component {
             Các ghi chú của bạn
           </Text>
           <ListView
+            onEndReached={() => this.fetchData()}
             dataSource={this.state.dataSource}
             renderRow={rowData => (
               <TouchableOpacity onPress={()=> {
