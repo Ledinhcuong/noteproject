@@ -25,8 +25,12 @@ import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends Component {
   
-  constructor () {
-    super ();
+  constructor (props) {
+    super (props);
+    this.state = {
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    }
+/*
     const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows ([
@@ -38,6 +42,21 @@ export default class NoteScreen extends Component {
         'note 6',
       ]),
     };
+    */
+  }
+ 
+  fetchData() {
+    fetch("http://192.168.161.2:81/webservice/viewnote.php", {method: "POST", body: null})
+    .then((response)=>response.json())
+    .then((responseData)=> {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(responseData)
+        });
+    }).done()
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render () {
@@ -87,9 +106,9 @@ export default class NoteScreen extends Component {
             renderRow={rowData => (
               <TouchableOpacity onPress={()=> this.props.navigation.navigate ('DetailNote')}>
                   <NoteItem
-                title="Tiêu đề"
-                date="25/12/2018"
-                content="Nội dung của nó"
+                title={rowData.TitleNote}
+                date={rowData.Date}
+                content={rowData.Content}
               />
               </TouchableOpacity>
               
