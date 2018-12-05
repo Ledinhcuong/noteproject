@@ -105,7 +105,7 @@ export default class NoteScreen extends Component {
           <View
             style={{
               flexDirection: 'row',
-              //justifyContent: 'center',
+              justifyContent: 'center',
             }}
           >
 
@@ -176,7 +176,7 @@ const styles = StyleSheet.create ({
   },
 
   btnAdd: {
-    backgroundColor: '#4cd964',
+    backgroundColor: '#2e7d32',
     width: 120,
     paddingTop: 5,
     paddingBottom: 5,
@@ -189,7 +189,7 @@ const styles = StyleSheet.create ({
   },
 
   btnCancel: {
-    backgroundColor: '#ff9100',
+    backgroundColor: '#ef6c00',
     width: 120,
     paddingTop: 5,
     paddingBottom: 5,

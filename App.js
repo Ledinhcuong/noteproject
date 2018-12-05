@@ -8,7 +8,6 @@ import DetailsScreen from './DetailsScreen';
 import EditNoteScreen from './EditNoteScreen';
 import DetailNote from './DetailNote';
 import NoteItem from './NoteItem';
-import MuaHang from './MuaHang';
 import TodoScreen from './views/TodoScreen';
 import AddTodoScreen from './views/AddTodoScreen';
 import EditTodoScreen from './views/EditTodoScreen';
