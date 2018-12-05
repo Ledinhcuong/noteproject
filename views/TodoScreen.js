@@ -1,42 +1,79 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View, CheckBox } from 'react-native';
+import { 
+  AppRegistry, FlatList, StyleSheet, Text, View, CheckBox,
+  TouchableOpacity, 
+  ActivityIndicator } from 'react-native';
+import ActionButton from 'react-native-action-button';
 
-const dataSource = [
+const dataSource2 = [
   {key: 'Project Laravel'},
   {key: 'Project React Native'},
   {key: 'Project iOS'},
 ];
+
+var dataSource = [];
 export default class FlatListBasics extends Component {
   constructor(props){
     super(props);
  
-    this.state = {
-      checked: true,
-    }
+    this.state ={ isLoading: true}
  }
+
+
+componentDidMount(){
+  return fetch('http://192.168.4.110:88/NoteWebService/getTodo.php')
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson,
+      }, function(){
+
+      });
+
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+}
+
   render() {
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
     return (
       <View>
         <View>
           <Text style={styles.header}>Todo</Text>
           <FlatList
-            data={dataSource}
+            data={this.state.dataSource}
             renderItem={
               ({item}) =>
               <View style={styles.todoItemContainer}>
-                <Text style={styles.item}>{item.key}</Text>
+              <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('EditTodo', {
+                todoContent: item.Content
+              })}>
+                <Text style={styles.item}>{item.Content}</Text>
+              </TouchableOpacity>
                 <CheckBox
-                  title='Click Here'
+                  title='Mark this task as Done'
                   checked={this.state.checked}
                 />
               </View>
             }
+            keyExtractor={({IdTask}, index) => IdTask}
           />
         </View>
         <View style={{marginTop: 40}}>
           <Text style={styles.header}>Done tasks</Text>
           <FlatList
-            data={dataSource}
+            data={dataSource2}
             renderItem={
               ({item}) =>
               <View style={styles.doneItemContainer}>
@@ -45,6 +82,10 @@ export default class FlatListBasics extends Component {
             }
           />
         </View>
+        <ActionButton
+          buttonColor="darkorange"
+          onPress={() => this.props.navigation.navigate ('AddTodo')}
+        />
       </View>
     );
   }
@@ -73,6 +114,7 @@ const styles = StyleSheet.create({
    },
   item: {
     padding: 10,
+    width: 300,
     fontSize: 18,
     height: 44,
   },

@@ -31,7 +31,7 @@ export default class EditNoteScreen extends Component {
     return (
       <View style={{flex: 1, backgroundColor: "#000"}}>
 
-       <TouchableOpacity>
+       <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
          <Image style={{marginLeft: 20}} source={require ('./backicon.png')} /> 
        </TouchableOpacity>
 
@@ -41,7 +41,7 @@ export default class EditNoteScreen extends Component {
         </View>
 
         <View style={styles.content}>
-          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi thông tin mà bạn muốn sửa</Text>
+          <Text style={{color: "#fff", fontSize: 18, marginBottom: 15}}>Thay đổi những nội dung bạn muốn sửa</Text>
           <TextInput
             style={styles.inputTitle}
             onChangeText={text => this.setState ({text})}
@@ -63,9 +63,7 @@ export default class EditNoteScreen extends Component {
           <View
             style={{
               flexDirection: 'row',
-              justifyContent: 'space-between',
-              paddingLeft: 40,
-              paddingRight: 40,
+              //justifyContent: 'center',
             }}
           >
 
@@ -75,7 +73,8 @@ export default class EditNoteScreen extends Component {
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{marginTop: 15}}>
+            <TouchableOpacity style={{marginTop: 15}}
+            onPress={() => this.props.navigation.goBack (null)}>
               <Text style={styles.btnCancel}>
                 Hủy
               </Text>
@@ -140,6 +139,8 @@ const styles = StyleSheet.create ({
     color: '#fff',
     borderRadius: 8,
     fontSize: 20,
+    marginRight: 40
+
   },
 
   btnCancel: {

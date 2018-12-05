@@ -24,8 +24,13 @@ import {FloatingAction} from 'react-native-floating-action';
 import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends Component {
-  constructor () {
-    super ();
+  
+  constructor (props) {
+    super (props);
+    this.state = {
+      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
+    }
+/*
     const ds = new ListView.DataSource ({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
       dataSource: ds.cloneWithRows ([
@@ -37,6 +42,21 @@ export default class NoteScreen extends Component {
         'note 6',
       ]),
     };
+    */
+  }
+ 
+  fetchData() {
+    fetch("http://192.168.161.2:81/webservice/viewnote.php", {method: "POST", body: null})
+    .then((response)=>response.json())
+    .then((responseData)=> {
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(responseData)
+        });
+    }).done()
+  }
+
+  componentDidMount() {
+    this.fetchData();
   }
 
   render () {
@@ -44,7 +64,7 @@ export default class NoteScreen extends Component {
       <View style={{flex: 1, backgroundColor: '#000'}}>
   
       <TouchableOpacity onPress={() => this.props.navigation.goBack (null)}>
-        <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}>  Back Home</Text>
+        <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}> Màn Hình Chủ</Text>
       </TouchableOpacity>
 
         <View style={styles.title}>
@@ -53,6 +73,25 @@ export default class NoteScreen extends Component {
         </View>
 
         <View style={styles.content}>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+             
+              <View style={styles.backGroundAction}>
+                <TouchableOpacity style={styles.btnAction}
+                onPress={()=> this.props.navigation.navigate ('Home')}>
+                <Image source={require ('./homeicon.png')} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./searchicon.png')} />
+                </TouchableOpacity>
+
+                 <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./upbuttonicon.png')} />
+                </TouchableOpacity>
+
+              </View>
+
+          </View>
           <Text
             style={{
               color: '#fff',
@@ -67,9 +106,9 @@ export default class NoteScreen extends Component {
             renderRow={rowData => (
               <TouchableOpacity onPress={()=> this.props.navigation.navigate ('DetailNote')}>
                   <NoteItem
-                title="Tiêu đề"
-                date="25/12/2018"
-                content="Nội dung của nó"
+                title={rowData.TitleNote}
+                date={rowData.Date}
+                content={rowData.Content}
               />
               </TouchableOpacity>
               
@@ -94,6 +133,18 @@ const styles = StyleSheet.create ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  backGroundAction: {
+    flexDirection: 'row',
+     backgroundColor: '#5C5C5C',
+      borderRadius: 18,
+       padding: 5
+  },
+
+  btnAction: {
+    marginLeft: 3,
+    marginRight: 3,
   },
 
   textTitle: {

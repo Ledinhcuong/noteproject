@@ -26,7 +26,9 @@ export default class Home extends React.Component {
         />
 
         <View>
-          <Text style={{color: '#fff', fontSize: 22, marginLeft: 20}}>Nhóm 1</Text>
+          <Text style={{color: '#fff', fontSize: 22, marginLeft: 20}}>
+            Nhóm 1
+          </Text>
         </View>
 
         <View style={styles.title}>
@@ -35,6 +37,25 @@ export default class Home extends React.Component {
         </View>
 
         <View style={styles.content}>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+
+            <View style={styles.backGroundAction}>
+              <TouchableOpacity style={styles.btnAction}
+              onPress={()=>this.props.navigation.navigate ('NoteAdd')}>
+                <Image source={require ('./addnoteicon.png')} />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./addtaskicon.png')} />
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.btnAction}>
+                <Image source={require ('./searchicon.png')} />
+              </TouchableOpacity>
+
+            </View>
+
+          </View>
 
           <Text
             style={{
@@ -47,8 +68,8 @@ export default class Home extends React.Component {
             Hãy chọn chức năng bạn muốn
           </Text>
 
-          <TouchableOpacity 
-            onPress={() => this.props.navigation.navigate('Note')}
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate ('Note')}
           >
             <View style={styles.contentIcon}>
 
@@ -67,7 +88,8 @@ export default class Home extends React.Component {
           </TouchableOpacity>
 
           <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Todo')}>
+            onPress={() => this.props.navigation.navigate ('Todo')}
+          >
             <View style={styles.contentIcon}>
 
               <View style={{padding: 10}}>
@@ -118,9 +140,17 @@ export default class Home extends React.Component {
 
           </TouchableOpacity>
 
-          <View style={{justifyContent: 'center', flexDirection: 'row'}}>
-          
-            <Image source={require ('./bottom.png')} />
+          <View style={{justifyContent: 'space-between', flexDirection: 'row'}}>
+
+              <Text style={{color: '#fff'}}>Phiên bản 1.0</Text>
+             <TouchableOpacity>
+             
+            </TouchableOpacity>
+
+             <TouchableOpacity>
+              <Text style={{color: '#7c4dff'}}>Settings</Text>
+            </TouchableOpacity>
+
           </View>
 
         </View>
@@ -147,6 +177,17 @@ const styles = StyleSheet.create ({
     borderColor: '#fff',
     backgroundColor: '#5C5C5C',
     marginBottom: 15,
+  },
+  backGroundAction: {
+    flexDirection: 'row',
+    backgroundColor: '#5C5C5C',
+    borderRadius: 18,
+    padding: 5,
+  },
+
+  btnAction: {
+    marginLeft: 3,
+    marginRight: 3,
   },
 
   textTitle: {
