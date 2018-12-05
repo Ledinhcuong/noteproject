@@ -1,35 +1,65 @@
 import React, { Component } from 'react';
-import { AppRegistry, FlatList, StyleSheet, Text, View, CheckBox, TouchableOpacity } from 'react-native';
+import { 
+  AppRegistry, FlatList, StyleSheet, Text, View, CheckBox,
+  TouchableOpacity, 
+  ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
 
-const dataSource = [
+const dataSource2 = [
   {key: 'Project Laravel'},
   {key: 'Project React Native'},
   {key: 'Project iOS'},
 ];
+
+var dataSource = [];
 export default class FlatListBasics extends Component {
   constructor(props){
     super(props);
  
-    this.state = {
-      checked: true,
-    }
+    this.state ={ isLoading: true}
  }
+
+
+componentDidMount(){
+  return fetch('http://192.168.4.110:88/NoteWebService/getTodo.php')
+    .then((response) => response.json())
+    .then((responseJson) => {
+
+      this.setState({
+        isLoading: false,
+        dataSource: responseJson,
+      }, function(){
+
+      });
+
+    })
+    .catch((error) =>{
+      console.error(error);
+    });
+}
+
   render() {
+    if(this.state.isLoading){
+      return(
+        <View style={{flex: 1, padding: 20}}>
+          <ActivityIndicator/>
+        </View>
+      )
+    }
     return (
       <View>
         <View>
           <Text style={styles.header}>Todo</Text>
           <FlatList
-            data={dataSource}
+            data={this.state.dataSource}
             renderItem={
               ({item}) =>
               <View style={styles.todoItemContainer}>
               <TouchableOpacity
               onPress={() => this.props.navigation.navigate('EditTodo', {
-                todoContent: item.key
+                todoContent: item.Content
               })}>
-                <Text style={styles.item}>{item.key}</Text>
+                <Text style={styles.item}>{item.Content}</Text>
               </TouchableOpacity>
                 <CheckBox
                   title='Mark this task as Done'
@@ -37,12 +67,13 @@ export default class FlatListBasics extends Component {
                 />
               </View>
             }
+            keyExtractor={({IdTask}, index) => IdTask}
           />
         </View>
         <View style={{marginTop: 40}}>
           <Text style={styles.header}>Done tasks</Text>
           <FlatList
-            data={dataSource}
+            data={dataSource2}
             renderItem={
               ({item}) =>
               <View style={styles.doneItemContainer}>
@@ -83,6 +114,7 @@ const styles = StyleSheet.create({
    },
   item: {
     padding: 10,
+    width: 300,
     fontSize: 18,
     height: 44,
   },
