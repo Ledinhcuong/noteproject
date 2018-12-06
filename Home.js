@@ -26,12 +26,14 @@ export default class Home extends React.Component {
         />
 
         <View>
+         
           <Text style={{color: '#fff', fontSize: 22, marginLeft: 20}}>
             Nhóm 1
           </Text>
         </View>
 
         <View style={styles.title}>
+          <Image source={require ('./logoapp.png')} />
           <Text style={styles.textTitle}>Xin Chào</Text>
 
         </View>

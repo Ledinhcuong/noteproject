@@ -57,7 +57,7 @@ export default class EditNoteScreen extends Component {
      // alert(responseJsonFromServer);  // In thông báo từ server
 
       // Trở về màn hình hiển thị các danh sách ghi chú
-      this.props.navigation.navigate ('Note');
+      this.props.navigation.push('Note');
 
 
     }).catch((error)=>{
