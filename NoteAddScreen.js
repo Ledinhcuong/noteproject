@@ -1,9 +1,7 @@
 /**
  * Tacgia: Lê Đình Cường
  * Screen: NoteAddScreen
- *
- * @format
- * @flow
+ 
  */
 
 import React, {Component} from 'react';
@@ -18,8 +16,7 @@ import {
   TextInput,
 } from 'react-native';
 
-import {FloatingAction} from 'react-native-floating-action';
-import ModalDropdown from 'react-native-modal-dropdown';
+
 
 export default class NoteScreen extends Component {
   constructor (props) {
@@ -58,8 +55,9 @@ export default class NoteScreen extends Component {
          
         })
         .catch (error => {
-          // In ra canh bao loi tu server
-          console.error (error);
+          // In ra thông báo lỗi
+          alert('Đã xuất hiện lỗi ngoài mong muốn :(')
+          //console.error (error);
         });
     });
   };
@@ -93,7 +91,6 @@ export default class NoteScreen extends Component {
               </TouchableOpacity>
 
               
-
             </View>
 
           </View>

@@ -56,8 +56,9 @@ export default class DetailNote extends Component {
 
     }).catch((error)=>{
 
-      // In ra canh bao loi tu server
-      console.error(error);
+      alert('Đã xuất hiện lỗi trong quá trình xóa ): ')
+      
+     // console.error(error);
     });
   });
 }

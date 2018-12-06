@@ -1,9 +1,6 @@
 /**
  * Tacgia: Lê Đình Cường
  * Screen: NoteScreen
- *
- * @format
- * @flow
  */
 
 import React, {Component} from 'react';
@@ -21,25 +18,25 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {FloatingAction} from 'react-native-floating-action';
+
 import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends React.Component {
   constructor (props) {
     super (props);
     
-    // Props
+    
 
     // State
     this.state = {
-      upData: false,
+      isLoading: true,
       dataSource: new ListView.DataSource ({
         rowHasChanged: (r1, r2) => r1 !== r2,
       }),
     };
   }
 
-
+  // Hàm lấy dữ liệu từ cơ sở dữ liệu
   fetchData () {
     fetch ('http://192.168.161.2:81/webservice/viewnote.php', {
       method: 'POST',
@@ -49,38 +46,33 @@ export default class NoteScreen extends React.Component {
       .then (responseData => {
         this.setState ({
           dataSource: this.state.dataSource.cloneWithRows (responseData),
-         
+          isLoading: false
         });
       })
       .done ();
   }
 
 
-  // Lấy dữ liệu từ sever
+  // Gọi hàm lấy dữ liệu từ cơ sở dữ liệu
   componentDidMount () {
 
     this.fetchData ();
     
   }
 
-
-  /*
-  componentDidUpdate() {
-    alert('Component did upload');
-  }
-  */
-
+  // Render giao diện
   render () {
     
 
     return (
      
       <View style={{flex: 1, backgroundColor: '#000'}}>
+        
         <TouchableOpacity
           onPress={() => this.props.navigation.navigate ('Home')}
         >
           <Text style={{color: '#fff', fontSize: 18, marginLeft: 20}}>
-            {' '}Màn Hình Chủ
+             Màn Hình Chủ
           </Text>
         </TouchableOpacity>
 
@@ -105,7 +97,7 @@ export default class NoteScreen extends React.Component {
 
               <TouchableOpacity
                 style={styles.btnAction}
-                onPress={()=>this.setState({upData: true})}
+                onPress={()=> alert('Tính năng tìm kiếm sẽ thêm trong tương lai :)')}
                 
               >
                 <Image source={require ('./searchicon.png')} />
@@ -131,7 +123,12 @@ export default class NoteScreen extends React.Component {
             }}
           >
             Các ghi chú của bạn
+
           </Text>
+          
+          <ActivityIndicator color="#00c853" animating={this.state.isLoading} size="small"/>
+            
+          
           <ListView
             ref={listview => (this.listview = listview)}
             dataSource={this.state.dataSource}

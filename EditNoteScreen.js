@@ -2,8 +2,6 @@
  * Tacgia: Lê Đình Cường
  * Screen: NoteEditScreen
  *
- * @format
- * @flow
  */
 
 import React, {Component} from 'react';
@@ -18,15 +16,13 @@ import {
   TextInput,
 } from 'react-native';
 
-import {FloatingAction} from 'react-native-floating-action';
-import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class EditNoteScreen extends Component {
 
   // Hàm khởi tạo
   constructor (props) {
     super (props);
-  //  alert(this.props.navigation.state.params.idSelect);
+
      
     // State
      this.state = {text: 'Useless Placeholder',
@@ -63,7 +59,8 @@ export default class EditNoteScreen extends Component {
     }).catch((error)=>{
 
       // In ra canh bao loi tu server
-      console.error(error);
+      alert('Đã xuất hiện lỗi khi sửa dữ liệu ):')
+      //console.error(error);
     });
   });
 
