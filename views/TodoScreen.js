@@ -4,12 +4,14 @@ import {
   TouchableOpacity, 
   ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
+import DOMAIN from '../DataTeam/webservice/DBConfig';
 
 const dataSource2 = [
   {key: 'Project Laravel'},
   {key: 'Project React Native'},
   {key: 'Project iOS'},
 ];
+
 
 var dataSource = [];
 export default class FlatListBasics extends Component {
@@ -21,7 +23,7 @@ export default class FlatListBasics extends Component {
 
 
 componentDidMount(){
-  return fetch('http://192.168.4.110:88/NoteWebService/getTodo.php')
+  return fetch(DOMAIN + '/NoteWebService/getTodo.php')
     .then((response) => response.json())
     .then((responseJson) => {
 
