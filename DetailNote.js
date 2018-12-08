@@ -27,7 +27,7 @@ import ActionButton from 'react-native-action-button';
 export default class DetailNote extends Component {
   constructor (props) {
     super (props);
-    //alert( this.props.navigation.state.params.idSelect);
+    
 
   }
 
