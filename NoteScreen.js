@@ -1,9 +1,6 @@
 /**
  * Tacgia: Lê Đình Cường
  * Screen: NoteScreen
- *
- * @format
- * @flow
  */
 
 import React, {Component} from 'react';
@@ -12,6 +9,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  ActivityIndicator,
   ToolbarAndroid,
   StatusBar,
   View,
@@ -20,79 +18,101 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {FloatingAction} from 'react-native-floating-action';
+
 import ActionButton from 'react-native-action-button';
 
 export default class NoteScreen extends React.Component {
-  
   constructor (props) {
     super (props);
-
-    // Props
+    
     
 
     // State
     this.state = {
-      dataSource: new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2})
-    }
-
+      isLoading: true,
+      dataSource: new ListView.DataSource ({
+        rowHasChanged: (r1, r2) => r1 !== r2,
+      }),
+    };
   }
- 
-  fetchData() {
-    fetch("http://192.168.161.2:81/webservice/viewnote.php", {method: "POST", body: null})
-    .then((response)=>response.json())
-    .then((responseData)=> {
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData)
+
+  // Hàm lấy dữ liệu từ cơ sở dữ liệu
+  fetchData () {
+    fetch ('http://192.168.161.2:81/webservice/viewnote.php', {
+      method: 'POST',
+      body: null,
+    })
+      .then (response => response.json ())
+      .then (responseData => {
+        this.setState ({
+          dataSource: this.state.dataSource.cloneWithRows (responseData),
+          isLoading: false
         });
-    }).done()
+      })
+      .done ();
   }
 
 
-  // Lấy dữ liệu từ sever
-  componentDidMount() {
-    this.fetchData();
+  // Gọi hàm lấy dữ liệu từ cơ sở dữ liệu
+  componentDidMount () {
+
+    this.fetchData ();
+    
   }
 
-  
-  componentWillUpdate() {
-  
-    return true;
-  }
-  
-
+  // Render giao diện
   render () {
+    
+
     return (
+     
       <View style={{flex: 1, backgroundColor: '#000'}}>
-  
-      <TouchableOpacity onPress={() => this.props.navigation.navigate ('Home')}>
-        <Text style={{color: "#fff", fontSize: 18, marginLeft: 20}}> Màn Hình Chủ</Text>
-      </TouchableOpacity>
+        
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate ('Home')}
+        >
+          <Text style={{color: '#fff', fontSize: 18, marginLeft: 20}}>
+             Màn Hình Chủ
+          </Text>
+        </TouchableOpacity>
 
         <View style={styles.title}>
-        <Image style={{width: 56, height: 56, marginBottom: 5}} source={require ('./notei.png')} />
+          <Image
+            style={{width: 56, height: 56, marginBottom: 5}}
+            source={require ('./notei.png')}
+          />
           <Text style={styles.textTitle}>Ghi Chú</Text>
         </View>
 
         <View style={styles.content}>
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-             
-              <View style={styles.backGroundAction}>
-                <TouchableOpacity style={styles.btnAction}
-                onPress={()=> this.props.navigation.navigate ('Home')}>
+
+            <View style={styles.backGroundAction}>
+              <TouchableOpacity
+                style={styles.btnAction}
+                onPress={() => this.props.navigation.navigate ('Home')}
+              >
                 <Image source={require ('./homeicon.png')} />
-                </TouchableOpacity>
+              </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btnAction}>
+              <TouchableOpacity
+                style={styles.btnAction}
+                onPress={()=> alert('Tính năng tìm kiếm sẽ thêm trong tương lai :)')}
+                
+              >
                 <Image source={require ('./searchicon.png')} />
-                </TouchableOpacity>
+              </TouchableOpacity>
 
-                 <TouchableOpacity style={styles.btnAction}
-                 onPress={this.fetchData()}>
+              <TouchableOpacity
+                style={styles.btnAction}
+                onPress={() => {
+                  this.listview.scrollTo ({x: 0, y: 0, animated: true});
+                }}
+              >
                 <Image source={require ('./upbuttonicon.png')} />
-                </TouchableOpacity>
+              </TouchableOpacity>
 
-              </View>
+            </View>
 
           </View>
           <Text
@@ -103,21 +123,31 @@ export default class NoteScreen extends React.Component {
             }}
           >
             Các ghi chú của bạn
+
           </Text>
-          <ListView
           
+          <ActivityIndicator color="#00c853" animating={this.state.isLoading} size="small"/>
+            
+          
+          <ListView
+            ref={listview => (this.listview = listview)}
             dataSource={this.state.dataSource}
             renderRow={rowData => (
-              <TouchableOpacity onPress={()=> {
-              
-              this.props.navigation.navigate ('DetailNote', {idSelect: rowData.Id, titleSelect: rowData.TitleNote , contentSelect: rowData.Content});}}>
-                  <NoteItem
-                title={rowData.TitleNote}
-                date={rowData.Date}
-                content={rowData.Content}
-              />
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.navigate ('DetailNote', {
+                    idSelect: rowData.Id,
+                    titleSelect: rowData.TitleNote,
+                    contentSelect: rowData.Content,
+                  });
+                }}
+              >
+                <NoteItem
+                  title={rowData.TitleNote}
+                  date={rowData.Date}
+                  content={rowData.Content}
+                />
               </TouchableOpacity>
-              
             )}
           />
 
@@ -125,7 +155,7 @@ export default class NoteScreen extends React.Component {
 
         <ActionButton
           buttonColor="#7c4dff"
-          onPress={() => this.props.navigation.navigate ('NoteAdd')}
+          onPress={() => {this.props.navigation.navigate ('NoteAdd');} }
         />
 
       </View>
@@ -143,9 +173,9 @@ const styles = StyleSheet.create ({
 
   backGroundAction: {
     flexDirection: 'row',
-     backgroundColor: '#5C5C5C',
-      borderRadius: 18,
-       padding: 5
+    backgroundColor: '#5C5C5C',
+    borderRadius: 18,
+    padding: 5,
   },
 
   btnAction: {

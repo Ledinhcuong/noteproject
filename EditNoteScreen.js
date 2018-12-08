@@ -2,8 +2,6 @@
  * Tacgia: Lê Đình Cường
  * Screen: NoteEditScreen
  *
- * @format
- * @flow
  */
 
 import React, {Component} from 'react';
@@ -18,15 +16,13 @@ import {
   TextInput,
 } from 'react-native';
 
-import {FloatingAction} from 'react-native-floating-action';
-import ModalDropdown from 'react-native-modal-dropdown';
 
 export default class EditNoteScreen extends Component {
 
   // Hàm khởi tạo
   constructor (props) {
     super (props);
-  //  alert(this.props.navigation.state.params.idSelect);
+
      
     // State
      this.state = {text: 'Useless Placeholder',
@@ -57,13 +53,14 @@ export default class EditNoteScreen extends Component {
      // alert(responseJsonFromServer);  // In thông báo từ server
 
       // Trở về màn hình hiển thị các danh sách ghi chú
-      this.props.navigation.navigate ('Note');
+      this.props.navigation.push('Note');
 
 
     }).catch((error)=>{
 
       // In ra canh bao loi tu server
-      console.error(error);
+      alert('Đã xuất hiện lỗi khi sửa dữ liệu ):')
+      //console.error(error);
     });
   });
 
@@ -110,7 +107,7 @@ export default class EditNoteScreen extends Component {
           <View
             style={{
               flexDirection: 'row',
-              //justifyContent: 'center',
+              justifyContent: 'center',
             }}
           >
 
@@ -179,7 +176,7 @@ const styles = StyleSheet.create ({
   },
 
   btnAdd: {
-    backgroundColor: '#4cd964',
+    backgroundColor: '#2e7d32',
     width: 120,
     paddingTop: 5,
     paddingBottom: 5,
@@ -192,7 +189,7 @@ const styles = StyleSheet.create ({
   },
 
   btnCancel: {
-    backgroundColor: '#ff3b30',
+    backgroundColor: '#ef6c00',
     width: 120,
     paddingTop: 5,
     paddingBottom: 5,

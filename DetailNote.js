@@ -27,7 +27,7 @@ import ActionButton from 'react-native-action-button';
 export default class DetailNote extends Component {
   constructor (props) {
     super (props);
-    //alert( this.props.navigation.state.params.idSelect);
+    
 
   }
 
@@ -51,13 +51,14 @@ export default class DetailNote extends Component {
      // alert(responseJsonFromServer);  // In thông báo từ server
 
       // Trở về màn hình hiển thị các danh sách ghi chú
-      this.props.navigation.navigate ('Note');
+      this.props.navigation.push ('Note');
 
 
     }).catch((error)=>{
 
-      // In ra canh bao loi tu server
-      console.error(error);
+      alert('Đã xuất hiện lỗi trong quá trình xóa ): ')
+      
+     // console.error(error);
     });
   });
 }
