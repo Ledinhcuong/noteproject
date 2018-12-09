@@ -1,35 +1,45 @@
 import React, { Component } from 'react';
 import { 
-  AppRegistry, FlatList, StyleSheet, Text, View, CheckBox,
+  AppRegistry, FlatList, StyleSheet, Text, View,
+  ScrollView,
   TouchableOpacity, 
   ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
-import DOMAIN from '../DataTeam/webservice/DBConfig';
+import { CheckBox } from 'react-native-elements';
+//import DOMAIN from '../DataTeam/webservice/DBConfig';
 
-const dataSource2 = [
-  {key: 'Project Laravel'},
-  {key: 'Project React Native'},
-  {key: 'Project iOS'},
-];
+// const dataSource2 = [
+//   {key: 'Project Laravel'},
+//   {key: 'Project React Native'},
+//   {key: 'Project iOS'},
+// ];
+const DOMAIN = 'http://192.168.4.110:88'
 
 
-var dataSource = [];
+var notDoneTasks = [];
+var doneTasks =[];
 export default class FlatListBasics extends Component {
   constructor(props){
     super(props);
  
-    this.state ={ isLoading: true}
+    this.state ={
+      isLoading: true,
+      id: 0,
+      state: false,
+    }
  }
 
 
 componentDidMount(){
-  return fetch(DOMAIN + '/NoteWebService/getTodo.php')
+
+  return fetch(DOMAIN + '/webservice/getTodo.php')
     .then((response) => response.json())
     .then((responseJson) => {
 
       this.setState({
         isLoading: false,
-        dataSource: responseJson,
+        notDoneTasks: responseJson.filter(item => item.state == 0),
+        doneTasks: responseJson.filter(item => item.state == 1),
       }, function(){
 
       });
@@ -38,6 +48,34 @@ componentDidMount(){
     .catch((error) =>{
       console.error(error);
     });
+}
+
+// Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
+Update_Data_Into_MySQL = (id, state) => {
+  this.setState(()=>
+  {
+    fetch(DOMAIN + '/webservice/editTodo.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: id,
+        state: state,
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{
+    // alert(responseJsonFromServer);  // In thông báo từ server
+      
+      this.props.navigation.push('Todo');
+
+    }).catch((error)=>{
+      // In ra canh bao loi tu server
+      alert(error)
+
+    });
+  });
 }
 
   render() {
@@ -49,24 +87,29 @@ componentDidMount(){
       )
     }
     return (
-      <View>
+      <ScrollView>
         <View>
           <Text style={styles.header}>Todo</Text>
           <FlatList
-            data={this.state.dataSource}
+            data={this.state.notDoneTasks}
             renderItem={
               ({item}) =>
-              <View style={styles.todoItemContainer}>
+              <View style={[styles.todoItemContainer, (item.priority == 1)? {backgroundColor: 'red'} : {backgroundColor: 'darkorange'}]}>
               <TouchableOpacity
               onPress={() => this.props.navigation.navigate('EditTodo', {
-                todoContent: item.Content
+                id: item.IdTask,
+                content: item.Content,
+                state: item.state,
+                priority: item.priority,
               })}>
                 <Text style={styles.item}>{item.Content}</Text>
               </TouchableOpacity>
-                <CheckBox
-                  title='Mark this task as Done'
-                  checked={this.state.checked}
-                />
+              <CheckBox
+                right
+                title={'Not done'}
+                checked={this.state.state}
+                onPress={ () => {this.Update_Data_Into_MySQL(item.IdTask, true); }}
+              />
               </View>
             }
             keyExtractor={({IdTask}, index) => IdTask}
@@ -75,11 +118,11 @@ componentDidMount(){
         <View style={{marginTop: 40}}>
           <Text style={styles.header}>Done tasks</Text>
           <FlatList
-            data={dataSource2}
+            data={this.state.doneTasks}
             renderItem={
               ({item}) =>
               <View style={styles.doneItemContainer}>
-                <Text style={styles.item}>{item.key}</Text>
+                <Text style={styles.item}>{item.Content}</Text>
               </View>
             }
           />
@@ -88,7 +131,7 @@ componentDidMount(){
           buttonColor="darkorange"
           onPress={() => this.props.navigation.navigate ('AddTodo')}
         />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -116,7 +159,7 @@ const styles = StyleSheet.create({
    },
   item: {
     padding: 10,
-    width: 300,
+    width: 200,
     fontSize: 18,
     height: 44,
   },
