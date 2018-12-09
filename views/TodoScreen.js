@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { 
-  AppRegistry, FlatList, StyleSheet, Text, View,
+  AppRegistry, FlatList, StyleSheet, Text, View, Alert,
   ScrollView,
   TouchableOpacity, 
   ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { CheckBox } from 'react-native-elements';
 //import DOMAIN from '../DataTeam/webservice/DBConfig';
 
@@ -15,9 +16,6 @@ import { CheckBox } from 'react-native-elements';
 // ];
 const DOMAIN = 'http://192.168.4.110:88'
 
-
-var notDoneTasks = [];
-var doneTasks =[];
 export default class FlatListBasics extends Component {
   constructor(props){
     super(props);
@@ -38,7 +36,7 @@ componentDidMount(){
 
       this.setState({
         isLoading: false,
-        notDoneTasks: responseJson.filter(item => item.state == 0),
+        todoTasks: responseJson.filter(item => item.state == 0),
         doneTasks: responseJson.filter(item => item.state == 1),
       }, function(){
 
@@ -50,11 +48,10 @@ componentDidMount(){
     });
 }
 
-// Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
 Update_Data_Into_MySQL = (id, state) => {
   this.setState(()=>
   {
-    fetch(DOMAIN + '/webservice/editTodo.php', {
+    fetch(DOMAIN + '/webservice/todoAction.php', {
       method: 'POST',
       headers:
       {
@@ -62,6 +59,7 @@ Update_Data_Into_MySQL = (id, state) => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        action: 'update',
         id: id,
         state: state,
       })
@@ -78,6 +76,40 @@ Update_Data_Into_MySQL = (id, state) => {
   });
 }
 
+ // Phương thuc xoa dư lieu
+ Delete_Task = () => {
+  this.setState(()=>
+  {
+    fetch(DOMAIN + '/webservice/todoAction.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: "empty"
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{  
+      this.props.navigation.push ('Todo');
+    }).catch((error)=>{
+      alert (error);
+    });
+  });
+}
+
+confirmDelete() {
+  Alert.alert(
+    'Empty done tasks',
+    'Do you want to delete all task already done?',
+    [
+      {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      {text: 'OK', onPress: () => this.Delete_Task()},
+    ],
+    { cancelable: false }
+  )
+}
+
   render() {
     if(this.state.isLoading){
       return(
@@ -87,11 +119,11 @@ Update_Data_Into_MySQL = (id, state) => {
       )
     }
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#111' }}>
         <View>
           <Text style={styles.header}>Todo</Text>
           <FlatList
-            data={this.state.notDoneTasks}
+            data={this.state.todoTasks}
             renderItem={
               ({item}) =>
               <View style={[styles.todoItemContainer, (item.priority == 1)? {backgroundColor: 'red'} : {backgroundColor: 'darkorange'}]}>
@@ -106,7 +138,7 @@ Update_Data_Into_MySQL = (id, state) => {
               </TouchableOpacity>
               <CheckBox
                 right
-                title={'Not done'}
+                title={'Check done'}
                 checked={this.state.state}
                 onPress={ () => {this.Update_Data_Into_MySQL(item.IdTask, true); }}
               />
@@ -122,15 +154,27 @@ Update_Data_Into_MySQL = (id, state) => {
             renderItem={
               ({item}) =>
               <View style={styles.doneItemContainer}>
-                <Text style={styles.item}>{item.Content}</Text>
+                <Text style={[styles.item, {color: 'white'}]}>{item.Content}</Text>
               </View>
             }
           />
         </View>
-        <ActionButton
-          buttonColor="darkorange"
-          onPress={() => this.props.navigation.navigate ('AddTodo')}
-        />
+
+        {/* Rest of the app comes ABOVE the action button component !*/}
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='darkorange' title="New Task"
+          onPress={() => this.props.navigation.navigate('AddTodo')}>
+            <Icon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Empty done tasks"
+          onPress={() => {this.confirmDelete()}}>
+            <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="Back home"
+          onPress={() => {this.props.navigation.navigate('Home')}}>
+            <Icon name="md-done-all" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       </ScrollView>
     );
   }
@@ -140,6 +184,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 40,
     textAlign: 'center',
+    color: 'white'
   },
   todoItemContainer: {
    flex: 1,
@@ -159,7 +204,7 @@ const styles = StyleSheet.create({
    },
   item: {
     padding: 10,
-    width: 200,
+    width: 220,
     fontSize: 18,
     height: 44,
   },
