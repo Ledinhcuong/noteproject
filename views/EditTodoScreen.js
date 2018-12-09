@@ -9,7 +9,7 @@ import {
   TextInput,
   Picker
 } from 'react-native';
-const DOMAIN = 'http://192.168.4.110:88'
+const DOMAIN = 'http://192.168.164.2:81'
 
 
 export default class EditTodoScreen extends Component {

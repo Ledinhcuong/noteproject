@@ -6,15 +6,10 @@ import {
   ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { CheckBox } from 'react-native-elements';
+ import { CheckBox } from 'react-native-elements';
 //import DOMAIN from '../DataTeam/webservice/DBConfig';
 
-// const dataSource2 = [
-//   {key: 'Project Laravel'},
-//   {key: 'Project React Native'},
-//   {key: 'Project iOS'},
-// ];
-const DOMAIN = 'http://192.168.4.110:88'
+const DOMAIN = 'http://192.168.164.2:81'
 
 export default class FlatListBasics extends Component {
   constructor(props){

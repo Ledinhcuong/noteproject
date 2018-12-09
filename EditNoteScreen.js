@@ -37,7 +37,7 @@ export default class EditNoteScreen extends Component {
   Edit_Data_Into_MySQL = () => {
     this.setState(()=>
     {
-    fetch('http://192.168.161.2:81/webservice/editnote.php', {
+    fetch('http://192.168.164.2:81/webservice/editnote.php', {
       method: 'POST',
       headers:
       {

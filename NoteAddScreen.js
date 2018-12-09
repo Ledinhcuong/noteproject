@@ -32,7 +32,7 @@ export default class NoteScreen extends Component {
   // Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
   Insert_Data_Into_MySQL = () => {
     this.setState (() => {
-      fetch ('http://192.168.161.2:81/webservice/addnote.php', {
+      fetch ('http://192.168.164.2:81/webservice/addnote.php', {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -36,7 +36,7 @@ export default class DetailNote extends Component {
   Delete_Note = () => {
     this.setState(()=>
     {
-    fetch('http://192.168.161.2:81/webservice/deletenote.php', {
+    fetch('http://192.168.164.2:81/webservice/deletenote.php', {
       method: 'POST',
       headers:
       {

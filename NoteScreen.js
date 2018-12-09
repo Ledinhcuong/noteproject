@@ -38,7 +38,7 @@ export default class NoteScreen extends React.Component {
 
   // Hàm lấy dữ liệu từ cơ sở dữ liệu
   fetchData () {
-    fetch ('http://192.168.161.2:81/webservice/viewnote.php', {
+    fetch ('http://192.168.164.2:81/webservice/viewnote.php', {
       method: 'POST',
       body: null,
     })
