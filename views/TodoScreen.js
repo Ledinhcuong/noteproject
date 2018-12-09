@@ -94,7 +94,7 @@ Update_Data_Into_MySQL = (id, state) => {
             data={this.state.notDoneTasks}
             renderItem={
               ({item}) =>
-              <View style={styles.todoItemContainer}>
+              <View style={[styles.todoItemContainer, (item.priority == 1)? {backgroundColor: 'red'} : {backgroundColor: 'darkorange'}]}>
               <TouchableOpacity
               onPress={() => this.props.navigation.navigate('EditTodo', {
                 id: item.IdTask,
