@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   TextInput,
+  Picker
 } from 'react-native';
 const DOMAIN = 'http://192.168.4.110:88'
 
@@ -31,11 +32,11 @@ export default class EditTodoScreen extends Component {
     };
   }
 
-  // Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
+ 
   Update_Data_Into_MySQL = () => {
     this.setState(()=>
     {
-    fetch(DOMAIN + '/webservice/editTodo.php', {
+    fetch(DOMAIN + '/webservice/todoAction.php', {
       method: 'POST',
       headers:
       {
@@ -43,6 +44,7 @@ export default class EditTodoScreen extends Component {
           'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        action: 'update',
         id: this.state.id,
         content: this.state.content,
         state: this.state.state,
@@ -76,23 +78,58 @@ export default class EditTodoScreen extends Component {
     });
   }
 
-  render () {
-    
 
+  // Phương thuc xoa dư lieu
+ Delete_Task = () => {
+  this.setState(()=>
+  {
+    fetch(DOMAIN + '/webservice/todoAction.php', {
+      method: 'POST',
+      headers:
+      {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        action: "delete",
+        id: this.state.id,
+      })
+    }).then((response) => response.json()).then((responseJsonFromServer)=>{  
+      this.props.navigation.push ('Todo');
+    }).catch((error)=>{
+      alert (error);
+    });
+  });
+}
+
+  render () {
     return (
       <View style={{flex: 1, backgroundColor: "#111", padding: 40}}>
 
         <View>
           <Text style={[styles.h1, styles.white]}>Sửa nhiệm vụ</Text>
-          <TouchableOpacity
-            disable={false}
-            onPress={() => this.updateTaskState()}
-            style={[styles.button, styles.distance, (this.state.state == true)? {backgroundColor: 'green'} : {backgroundColor: 'orange'}, {width: 140}]}
-          >
-            <Text>
-              Mark this as done
-            </Text>
-          </TouchableOpacity>
+          <View style={[{ flexDirection: 'row' }, styles.distance,]}>
+            <TouchableOpacity
+              disable={false}
+              onPress={() => this.updateTaskState()}
+              style={[
+                styles.button, (this.state.state == true)?
+                  {backgroundColor: 'green'} : {backgroundColor: 'orange'},
+                {width: 140, justifyContent: 'center',}
+              ]}>
+              <Text>
+                Mark this as done
+              </Text>
+            </TouchableOpacity>
+            <Picker
+              selectedValue={this.state.priority}
+              style={[{ height: 50, width: 140},
+              (this.state.priority == 1)? {backgroundColor: 'red'} : {backgroundColor: 'orange'}]}
+              onValueChange={(itemValue, itemIndex) => this.setState({priority: itemValue})}>
+              <Picker.Item label="Cao" value="1" />
+              <Picker.Item label="Trung bình" value="0" />
+            </Picker>
+          </View>
           <TextInput
             placeholder="Nhập nhiệm vụ"
             placeholderTextColor= "#aaa"
@@ -111,6 +148,13 @@ export default class EditTodoScreen extends Component {
             onPress={this.Update_Data_Into_MySQL}>
               <Text style={styles.button}>
                 Save
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+            onPress={this.Delete_Task}>
+              <Text style={styles.button}>
+                Delete
               </Text>
             </TouchableOpacity>
 
@@ -135,9 +179,11 @@ const styles = StyleSheet.create ({
   greenbutton: {backgroundColor: 'green'},
   button: {
     backgroundColor: 'grey',
-    width: 120,
+    width: 80,
     textAlign: 'center',
-    padding: 10
+    padding: 10,
+    borderWidth: 2,
+    borderColor: '#ccc',
   },
   textInputArea: {
     textAlign: 'left',

@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Picker
 } from 'react-native';
 const DOMAIN = 'http://192.168.4.110:88'
 
@@ -14,21 +15,25 @@ export default class AddTodoScreen extends Component {
     super(props);
     this.state = { 
       text: 'Useless Placeholder',
-      content: ''
+      content: '',
+      priority: 0,
     };
   }
 
   // Phương thức thêm dữ liệu vào trong cơ sở dữ liệu
   Insert_Data_Into_MySQL = () => {
     this.setState(() => {
-      fetch(DOMAIN + '/webservice/addTodo.php', {
+      fetch(DOMAIN + '/webservice/todoAction.php', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          Content: this.state.content,
+          action: 'insert',
+          content: this.state.content,
+          priority: this.state.priority,
+          date: new Date(),
         }),
       })
         .then(response => response.json())
@@ -49,10 +54,21 @@ export default class AddTodoScreen extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: "#111", padding: 10 }}>
+      <View style={{ flex: 1, backgroundColor: "#111", padding: 40 }}>
 
         <View>
           <Text style={[styles.h1, styles.white]}>Thêm nhiệm vụ</Text>
+          <View style={[{ flexDirection: 'row' },  styles.distance]}>
+            <Text style={{ color: 'white', padding: 20 }}>Độ ưu tiên</Text>
+            <Picker
+              selectedValue={this.state.priority}
+              style={[{ height: 40, width: 140, color: 'white', margin: 10 }, (this.state.priority)? {backgroundColor: 'red'} : {backgroundColor: 'orange'}]}
+              onValueChange={(itemValue, itemIndex) => this.setState({priority: itemValue})}>
+              <Picker.Item label="Cao" value={1} />
+              <Picker.Item label="Trung bình" value={0} />
+            </Picker>
+          </View>
+
           <TextInput
             placeholder="Nhập nhiệm vụ . . ."
             placeholderTextColor="#aaa"
@@ -63,9 +79,9 @@ export default class AddTodoScreen extends Component {
             multiline={true}
             editable={true}
             scrollEnabled={true}
-            style={[styles.textInputArea, styles.distance]}
+            style={[styles.textInputArea]}
           />
-
+          
           <View style={[{ flexDirection: 'row', justifyContent: 'space-around' }, styles.distance]}>
             <TouchableOpacity
               onPress={this.Insert_Data_Into_MySQL}>
